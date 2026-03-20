@@ -11,11 +11,20 @@ const features = [
   {
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
       </svg>
     ),
-    title: "AI Headline Summaries",
-    desc: "One-line AI summaries capture the essence of every story so you can scan the feed faster.",
+    title: "AI Summaries & Analysis",
+    desc: "Get instant AI-powered summaries and deep analysis of any article — understand stories in seconds.",
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802" />
+      </svg>
+    ),
+    title: "AI Translation",
+    desc: "Translate any article into your language with a single tap — break the language barrier on HN.",
   },
   {
     icon: (
@@ -53,6 +62,15 @@ const features = [
     title: "Readable Articles",
     desc: "Extracted article text with clean formatting — read stories without leaving the app.",
   },
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+      </svg>
+    ),
+    title: "AI Comment Summaries",
+    desc: "Long threads distilled into key takeaways — catch up on discussions without endless scrolling.",
+  },
 ];
 
 export default function Features() {
@@ -60,10 +78,10 @@ export default function Features() {
     <section id="features" className="w-full py-20 px-6">
       <div className="mx-auto max-w-5xl">
         <h2 className="font-[var(--font-display)] text-3xl sm:text-4xl font-bold text-white text-center mb-4">
-          Features
+          AI-Powered Features
         </h2>
         <p className="text-[#a1a1aa] text-center mb-14 max-w-xl mx-auto">
-          Everything you need to browse Hacker News, beautifully.
+          Everything you need to browse Hacker News — supercharged with AI.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
