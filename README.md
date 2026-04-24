@@ -1,16 +1,75 @@
-# React + Vite
+# Newsroll — Landing
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dark, editorial-futurist landing + blog + advertise site for an AI news-to-video mobile app. React 19 + Vite 7 + Tailwind v4 + react-router, pure-CSS animations, zero external asset dependencies beyond Google Fonts.
 
-Currently, two official plugins are available:
+## Routes
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Path              | Page          | Purpose                                       |
+|-------------------|---------------|-----------------------------------------------|
+| `/`               | Home          | Hero, features, download CTA                  |
+| `/blog`           | Blog          | Field notes index                             |
+| `/blog/:slug`     | Blog post     | Long-form post reader                         |
+| `/advertise`      | Advertise     | Formats, rate card, inquiry form for brands   |
+| `*`               | NotFound      | 404 with recovery links                       |
 
-## React Compiler
+SPA fallback is handled by `public/_redirects` (`/* → /index.html 200`) on Cloudflare Pages.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Dev
 
-## Expanding the ESLint configuration
+```bash
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # → dist/
+npm run preview    # serve dist/ locally
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Analytics hooks
+
+Every CTA and form carries stable `id` + `data-event` attributes so a dashboard layer can wire funnels without DOM spelunking:
+
+| Surface          | Element                         | `id`                        | `data-event`                |
+|------------------|---------------------------------|-----------------------------|-----------------------------|
+| Header           | Download button                 | `cta-header-download`       | `download_click_header`     |
+| Hero             | Primary download CTA            | `cta-hero-download`         | `download_click_hero`       |
+| Hero             | Secondary "How it works"        | `cta-hero-how`              | `how_it_works_click`        |
+| Hero             | Email capture (form)            | `form-early-access`         | `early_access_form_submit`  |
+| Hero             | Email input (focus)             | `email-early`               | `early_access_email_focus`  |
+| Hero             | Email capture submit button     | `cta-early-access-submit`   | `early_access_submit_click` |
+| Feature band     | Download button                 | `cta-band-download`         | `download_click_band`       |
+| Feature band     | Android waitlist link           | `cta-band-android`          | `android_waitlist_click`    |
+| Feature cards    | Card wrappers                   | —                           | `feature_card_view`         |
+| Footer           | Privacy link                    | `link-privacy`              | `footer_privacy_click`      |
+| Footer           | Terms link                      | `link-terms`                | `footer_terms_click`        |
+| Footer           | Blog link                       | `link-blog`                 | `footer_blog_click`         |
+| Footer           | Advertise link                  | `link-advertise`            | `footer_advertise_click`    |
+| Footer           | Press link                      | `link-press`                | `footer_press_click`        |
+| Blog             | Post list item (per post)       | `blog-post-<slug>`          | `blog_post_open`            |
+| Blog             | Subscribe form                  | `form-blog-subscribe`       | `blog_subscribe_submit`     |
+| Blog             | Subscribe submit                | `cta-blog-subscribe`        | `blog_subscribe_click`      |
+| Advertise        | Format card CTAs                | `cta-format-<nn>`           | `ad_format_inquire_click`   |
+| Advertise        | Inquiry form                    | `form-advertise-inquiry`    | `ad_inquiry_submit`         |
+| Advertise        | Inquiry submit                  | `cta-advertise-submit`      | `ad_inquiry_submit_click`   |
+| Advertise        | Contact mailto                  | `link-email-ads`            | `ads_mailto_click`          |
+
+Each interactive element also carries `data-surface` where useful (`header`, `hero`, `feature_band`) for funnel segmentation.
+
+## Cloudflare Pages
+
+This project is structured to ship directly on Cloudflare Pages. No external host config is included.
+
+**Dashboard settings (zero-config deploy):**
+- **Framework preset:** _None_ (or _Vite_)
+- **Build command:** `npm run build`
+- **Build output directory:** `dist`
+- **Root directory:** `HackerRollLanding/new`
+- **Environment:** `NODE_VERSION=20`
+
+**Or via Wrangler CLI:**
+```bash
+npm run build
+npx wrangler pages deploy dist --project-name=newsroll-landing
+```
+
+`public/_headers` and `public/_redirects` are copied into `dist/` by Vite and are read natively by Cloudflare Pages:
+- `_headers` — security headers + long cache for hashed assets
+- `_redirects` — SPA fallback (`/* → /index.html 200`) for future client routing

@@ -1,48 +1,38 @@
 import { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Features from "./components/Features";
-import VisualFeedShowcase from "./components/VisualFeedShowcase";
-import CTA from "./components/CTA";
-import Footer from "./components/Footer";
-import TermsPage from "./pages/TermsPage";
-import PrivacyPage from "./pages/PrivacyPage";
-import NotFoundPage from "./pages/NotFoundPage";
-
-function HomePage() {
-  return (
-    <>
-      <Hero />
-      <Features />
-      <VisualFeedShowcase />
-      <CTA />
-    </>
-  );
-}
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import Header from "./components/Header.jsx";
+import Footer from "./components/Footer.jsx";
+import AmbientBackground from "./components/AmbientBackground.jsx";
+import Home from "./pages/Home.jsx";
+import Blog from "./pages/Blog.jsx";
+import BlogPost from "./pages/BlogPost.jsx";
+import Advertise from "./pages/Advertise.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 }
 
 export default function App() {
   return (
-    <div className="min-h-screen overflow-x-hidden">
-      <ScrollToTop />
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/terms" element={<TermsPage />} />
-        <Route path="/privacy" element={<PrivacyPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <div className="relative min-h-screen bg-ink-0 text-text">
+        <AmbientBackground />
+        <ScrollToTop />
+        <Header />
+        <main className="relative z-10">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/advertise" element={<Advertise />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }

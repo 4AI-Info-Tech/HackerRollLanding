@@ -4,4 +4,9 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  build: {
+    target: 'es2022',
+    cssMinify: 'lightningcss',
+    assetsInlineLimit: 4096,
+  },
 })

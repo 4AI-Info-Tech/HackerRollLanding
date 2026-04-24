@@ -1,42 +1,173 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap");
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #09090b;
-  --color-bg-card: rgba(255, 255, 255, 0.03);
-  --color-border: rgba(255, 255, 255, 0.06);
-  --color-hn: #ff6600;
-  --color-hn-glow: rgba(255, 102, 0, 0.2);
-  --color-muted: #a1a1aa;
-  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
-  --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
+  /* Palette — obsidian base, electric cyan accent, signal coral for heat */
+  --color-ink-0: #05060A;
+  --color-ink-1: #0A0C13;
+  --color-ink-2: #12141C;
+  --color-ink-3: #1B1E2A;
+  --color-line: rgba(255, 255, 255, 0.06);
+  --color-line-strong: rgba(255, 255, 255, 0.14);
+  --color-text: #F2F4F8;
+  --color-mute: #7A8298;
+  --color-mute-soft: #9AA2B6;
+  --color-accent: #6DE4FF;
+  --color-accent-glow: rgba(109, 228, 255, 0.35);
+  --color-accent-deep: #2BB8DF;
+  --color-violet: #B28CFF;
+  --color-hot: #FF6B3D;
+
+  /* Type */
+  --font-display: "Instrument Sans", system-ui, sans-serif;
+  --font-sans: "Inter Tight", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Radii */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+
+  /* Shadows */
+  --shadow-glow: 0 0 0 1px rgba(109, 228, 255, 0.18), 0 8px 40px -8px rgba(109, 228, 255, 0.28);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+  --shadow-phone: 0 50px 120px -30px rgba(0, 0, 0, 0.85), 0 0 80px -20px rgba(109, 228, 255, 0.18);
 }
 
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--color-ink-0);
+  color-scheme: dark;
 }
 
 body {
-  font-family: var(--font-body);
-  background-color: var(--color-bg);
-  color: #fafafa;
+  font-family: var(--font-sans);
+  background-color: var(--color-ink-0);
+  color: var(--color-text);
+  font-feature-settings: "ss01", "ss02", "cv11";
+  overflow-x: hidden;
 }
 
-@keyframes ticker {
-  0% { transform: translateY(0); }
-  16% { transform: translateY(0); }
-  20% { transform: translateY(-25%); }
-  36% { transform: translateY(-25%); }
-  40% { transform: translateY(-50%); }
-  56% { transform: translateY(-50%); }
-  60% { transform: translateY(-75%); }
-  76% { transform: translateY(-75%); }
-  80% { transform: translateY(-100%); }
-  96% { transform: translateY(-100%); }
-  100% { transform: translateY(-100%); }
+::selection {
+  background: var(--color-accent);
+  color: var(--color-ink-0);
 }
 
-.ticker-animate {
-  animation: ticker 12s ease-in-out infinite;
+/* Hairline grid */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Fine noise overlay */
+.bg-grain {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>");
+}
+
+/* Decorative gradient conic ring used behind phone */
+.aura {
+  background:
+    radial-gradient(40% 50% at 50% 45%, rgba(109, 228, 255, 0.22), transparent 70%),
+    radial-gradient(30% 30% at 70% 60%, rgba(178, 140, 255, 0.18), transparent 70%),
+    radial-gradient(30% 30% at 30% 30%, rgba(255, 107, 61, 0.12), transparent 70%);
+  filter: blur(30px);
+}
+
+/* Hero "marquee" / broadcast ticker */
+@keyframes tick {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker {
+  animation: tick 40s linear infinite;
+}
+
+/* Phone feed animation — vertical swipe cycle between three cards */
+@keyframes feed-cycle {
+  0%, 22%       { transform: translateY(0); }
+  28%, 50%      { transform: translateY(-100%); }
+  56%, 78%      { transform: translateY(-200%); }
+  84%, 100%     { transform: translateY(0); }
+}
+.feed-cycle {
+  animation: feed-cycle 15s cubic-bezier(0.85, 0, 0.15, 1) infinite;
+}
+
+/* Progress bar tied to feed cycle */
+@keyframes progress-fill {
+  0%   { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+.progress {
+  animation: progress-fill 5s linear infinite;
+  transform-origin: left;
+}
+
+/* Live dot pulse */
+@keyframes live-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 107, 61, 0.7); }
+  70%  { box-shadow: 0 0 0 10px rgba(255, 107, 61, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 107, 61, 0); }
+}
+.live-dot {
+  animation: live-pulse 2s infinite;
+}
+
+/* Subtle float for the whole phone */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-1.2deg); }
+  50%      { transform: translateY(-10px) rotate(-0.4deg); }
+}
+.phone-float {
+  animation: float 9s ease-in-out infinite;
+}
+
+/* Scanline sweep across the phone screen */
+@keyframes scan {
+  0%   { transform: translateY(-20%); opacity: 0; }
+  12%  { opacity: 1; }
+  100% { transform: translateY(120%); opacity: 0; }
+}
+.scanline {
+  animation: scan 6s ease-in-out infinite;
+}
+
+/* Entry fade+rise used via `style={{ animationDelay }}` */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.rise { animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.1, 1) both; }
+
+/* Hairline divider utility */
+.hair { background: linear-gradient(90deg, transparent, var(--color-line-strong), transparent); }
+
+/* Button glow halo */
+.btn-halo {
+  position: relative;
+  isolation: isolate;
+}
+.btn-halo::before {
+  content: "";
+  position: absolute; inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(from 180deg at 50% 50%, #6DE4FF, #B28CFF, #6DE4FF);
+  z-index: -1;
+  opacity: 0.9;
+  filter: blur(14px);
+  transform: translateZ(0);
+  transition: opacity 0.3s ease;
+}
+.btn-halo:hover::before { opacity: 1; }
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .feed-cycle, .progress, .live-dot, .phone-float, .scanline, .ticker, .rise {
+    animation: none !important;
+  }
 }

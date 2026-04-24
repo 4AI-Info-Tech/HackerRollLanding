@@ -1,43 +1,75 @@
-import { Link } from "react-router-dom";
-
 export default function Footer() {
+  const year = new Date().getFullYear();
   return (
-    <footer className="w-full py-12 px-6 border-t border-white/[0.06]">
-      <div className="mx-auto max-w-5xl">
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
-          <div className="sm:col-span-2">
-            <Link to="/" className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-md bg-[#ff6600] flex items-center justify-center">
-                <span className="text-white font-bold text-xs font-[var(--font-display)]">H</span>
-              </div>
-              <span className="text-white font-semibold">HackerRoll</span>
-            </Link>
-            <p className="text-sm text-[#71717a] max-w-xs">
-              Hacker News, reimagined as a visual magazine for iOS.
+    <footer className="relative z-10 border-t border-line bg-ink-0">
+      <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+        <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-accent shadow-[0_0_8px_var(--color-accent)]" />
+              <span className="font-display text-[15px] font-semibold tracking-tight text-text">
+                newsroll<span className="text-accent">.</span>app
+              </span>
+            </div>
+            <p className="mt-3 max-w-sm text-[12px] leading-relaxed text-mute">
+              The news, broadcast. Built in the open. No autoplay ads, no doomposting, no infinite newsletters.
             </p>
           </div>
 
-          <div>
-            <h4 className="text-white text-sm font-semibold mb-3">Product</h4>
-            <ul className="space-y-2">
-              <li><a href="/#features" className="text-sm text-[#71717a] hover:text-white transition-colors">Features</a></li>
-              <li><a href="https://apps.apple.com/app/hackerroll" className="text-sm text-[#71717a] hover:text-white transition-colors">Download</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white text-sm font-semibold mb-3">Legal</h4>
-            <ul className="space-y-2">
-              <li><Link to="/privacy" className="text-sm text-[#71717a] hover:text-white transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="text-sm text-[#71717a] hover:text-white transition-colors">Terms of Service</Link></li>
-            </ul>
-          </div>
+          <nav className="flex flex-wrap items-center gap-5 text-[12px] text-mute">
+            <a
+              id="link-blog"
+              data-event="footer_blog_click"
+              href="/blog"
+              className="transition-colors hover:text-text"
+            >
+              Blog
+            </a>
+            <span className="h-3 w-px bg-line-strong" />
+            <a
+              id="link-advertise"
+              data-event="footer_advertise_click"
+              href="/advertise"
+              className="transition-colors hover:text-text"
+            >
+              Advertise
+            </a>
+            <span className="h-3 w-px bg-line-strong" />
+            <a
+              id="link-privacy"
+              data-event="footer_privacy_click"
+              href="/privacy"
+              className="transition-colors hover:text-text"
+            >
+              Privacy
+            </a>
+            <span className="h-3 w-px bg-line-strong" />
+            <a
+              id="link-terms"
+              data-event="footer_terms_click"
+              href="/terms"
+              className="transition-colors hover:text-text"
+            >
+              Terms
+            </a>
+            <span className="h-3 w-px bg-line-strong" />
+            <a
+              id="link-press"
+              data-event="footer_press_click"
+              href="mailto:press@newsroll.app"
+              className="transition-colors hover:text-text"
+            >
+              Press
+            </a>
+          </nav>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-white/[0.06] text-center">
-          <p className="text-xs text-[#52525b]">
-            &copy; {new Date().getFullYear()} HackerRoll. All rights reserved. Not affiliated with Y Combinator.
-          </p>
+        <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t border-line pt-6 font-mono text-[10px] uppercase tracking-[0.22em] text-mute/80 md:flex-row md:items-center">
+          <span>© {year} Newsroll Labs · All rights reserved</span>
+          <span className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+            Operational · v0.1.0
+          </span>
         </div>
       </div>
     </footer>

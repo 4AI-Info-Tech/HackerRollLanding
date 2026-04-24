@@ -1,55 +1,199 @@
-const headlines = [
-  "Why the mass exodus from San Francisco is actually a myth",
-  "Open-source AI model beats GPT-4 on coding benchmarks",
-  "The forgotten engineer who invented the internet protocol",
-  "Show HN: I built a real-time collaborative code editor",
-];
+import { useState } from "react";
+import PhoneMockup from "./PhoneMockup.jsx";
+import { AppleIcon, ArrowIcon, GlobeIcon } from "./Icons.jsx";
 
 export default function Hero() {
   return (
-    <section className="w-full pt-32 pb-20 px-6">
-      <div className="mx-auto max-w-5xl text-center">
-        <h1 className="font-[var(--font-display)] text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.1]">
-          Hacker News,{" "}
-          <span className="text-[#ff6600]">reimagined</span>
-        </h1>
+    <section id="top" className="relative pt-8 sm:pt-14">
+      <Ticker />
 
-        <p className="mt-6 text-lg sm:text-xl text-[#a1a1aa] max-w-2xl mx-auto leading-relaxed">
-          AI-generated editorial illustrations, one-line headline summaries,
-          and the full HN experience — wrapped in a beautiful visual magazine
-          for iOS.
-        </p>
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-14 px-5 pb-20 pt-10 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pt-20">
+        {/* Copy column */}
+        <div className="relative flex flex-col justify-center">
+          <div className="rise inline-flex w-fit items-center gap-2 rounded-full border border-line-strong bg-ink-1/60 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-mute-soft backdrop-blur">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-hot opacity-60" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-hot" />
+            </span>
+            On air · daily
+          </div>
 
-        <div className="mt-10">
-          <a
-            href="https://apps.apple.com/app/hackerroll"
-            className="inline-flex items-center gap-2 bg-[#ff6600] hover:bg-[#e65c00] text-white font-semibold px-8 py-3.5 rounded-xl text-base transition-colors"
+          <h1
+            className="rise mt-6 font-display text-[42px] font-semibold leading-[0.95] tracking-[-0.025em] text-text sm:text-[56px] md:text-[68px] lg:text-[74px]"
+            style={{ animationDelay: "80ms" }}
           >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-            </svg>
-            Download for iOS
-          </a>
-        </div>
+            See the news.<br />
+            <span className="text-mute-soft">Don&rsquo;t just</span>{" "}
+            <em className="not-italic relative whitespace-nowrap text-text">
+              read
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 220 20"
+                preserveAspectRatio="none"
+                className="absolute -bottom-2 left-0 h-3 w-full"
+              >
+                <path
+                  d="M4 14 C 60 4, 160 4, 216 14"
+                  stroke="var(--color-accent)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  fill="none"
+                  style={{ filter: "drop-shadow(0 0 6px rgba(109,228,255,0.7))" }}
+                />
+              </svg>
+            </em>{" "}
+            <span className="text-mute-soft">it.</span>
+          </h1>
 
-        <div className="mt-14 mx-auto max-w-xl rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 overflow-hidden">
-          <p className="text-xs text-[#a1a1aa] uppercase tracking-widest mb-3 font-medium">
-            AI Headline Summaries
+          <p
+            className="rise mt-7 max-w-[520px] text-[15px] leading-relaxed text-mute sm:text-[17px]"
+            style={{ animationDelay: "160ms" }}
+          >
+            Newsroll reads the wires for you, then renders every story into short,
+            vertical video and image — updated the minute news breaks. Swipe the
+            world in under nine minutes a day.
           </p>
-          <div className="h-7 overflow-hidden">
-            <div className="ticker-animate">
-              {headlines.map((h, i) => (
-                <p key={i} className="h-7 text-sm text-white/80 truncate leading-7">
-                  &ldquo;{h}&rdquo;
-                </p>
-              ))}
-              <p className="h-7 text-sm text-white/80 truncate leading-7">
-                &ldquo;{headlines[0]}&rdquo;
-              </p>
-            </div>
+
+          <div
+            className="rise mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center"
+            style={{ animationDelay: "220ms" }}
+          >
+            <a
+              id="cta-hero-download"
+              data-event="download_click_hero"
+              data-surface="hero"
+              href="https://apps.apple.com/app/id6761051035"
+              target="_blank"
+              rel="noopener"
+              className="btn-halo group inline-flex items-center gap-3 rounded-full bg-accent px-5 py-3.5 text-[14px] font-semibold tracking-tight text-ink-0 transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              <AppleIcon className="h-[18px] w-[18px]" />
+              <span>Download on iOS</span>
+              <span className="ml-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-ink-0/10">
+                <ArrowIcon className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </a>
+
+            <a
+              id="cta-hero-how"
+              data-event="how_it_works_click"
+              data-surface="hero"
+              href="#features"
+              className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-ink-2/40 px-4 py-3 text-[13px] font-medium text-text/90 backdrop-blur transition-colors hover:bg-ink-2"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-mute" />
+              How it works
+            </a>
+          </div>
+
+          {/* Early access email */}
+          <EmailCapture />
+
+          {/* trust row */}
+          <div
+            className="rise mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-[12px] text-mute"
+            style={{ animationDelay: "360ms" }}
+          >
+            <TrustItem label="Used by" value="9,200 beta readers" />
+            <span className="hidden h-3 w-px bg-line-strong sm:inline-block" />
+            <TrustItem label="Sources" value="Reuters · AP · Bloomberg" icon={<GlobeIcon className="h-3.5 w-3.5 text-accent" />} />
+            <span className="hidden h-3 w-px bg-line-strong sm:inline-block" />
+            <TrustItem label="Privacy" value="No ads. No tracking." />
           </div>
         </div>
+
+        {/* Phone column */}
+        <div className="relative flex items-center justify-center py-8 lg:py-0">
+          <PhoneMockup />
+        </div>
       </div>
+
+      {/* bottom divider */}
+      <div className="mx-auto h-px max-w-6xl hair" />
     </section>
+  );
+}
+
+function EmailCapture() {
+  const [email, setEmail] = useState("");
+  const [state, setState] = useState("idle"); // idle | ok | err
+
+  function submit(e) {
+    e.preventDefault();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    setState(valid ? "ok" : "err");
+  }
+
+  return (
+    <form
+      id="form-early-access"
+      data-event="early_access_form_submit"
+      data-surface="hero"
+      onSubmit={submit}
+      className="rise mt-6 flex w-full max-w-[440px] items-center gap-2 rounded-full border border-line-strong bg-ink-1/60 p-1.5 pl-4 backdrop-blur"
+      style={{ animationDelay: "280ms" }}
+    >
+      <label htmlFor="email-early" className="sr-only">Email</label>
+      <input
+        id="email-early"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="you@inbox.com · get launch invite"
+        autoComplete="email"
+        data-event="early_access_email_focus"
+        className="flex-1 bg-transparent text-[13px] text-text placeholder:text-mute focus:outline-none"
+      />
+      <button
+        id="cta-early-access-submit"
+        data-event="early_access_submit_click"
+        data-surface="hero"
+        type="submit"
+        className="inline-flex items-center gap-1.5 rounded-full bg-ink-3 px-4 py-2 text-[12px] font-medium text-text transition-colors hover:bg-ink-2"
+      >
+        {state === "ok" ? "On the list ✦" : "Notify me"}
+      </button>
+    </form>
+  );
+}
+
+function TrustItem({ label, value, icon }) {
+  return (
+    <div className="inline-flex items-center gap-2">
+      {icon}
+      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-mute/80">{label}</span>
+      <span className="text-[12px] text-text/80">{value}</span>
+    </div>
+  );
+}
+
+function Ticker() {
+  const items = [
+    "LIVE · WIRE-0182",
+    "JWST · water signals confirmed at 40ly",
+    "MARKETS · S&P closes green, 0.8%",
+    "TECH · OpenAI opens v6 agent API",
+    "CLIMATE · Arctic sea ice at cycle low",
+    "CULTURE · Venice Biennale opens",
+    "WIRE · 4,218 stories rendered today",
+    "NEWSROLL · now on iOS · v0.1 beta",
+  ];
+  const row = [...items, ...items];
+  return (
+    <div
+      aria-hidden="true"
+      className="relative mx-auto flex w-full max-w-6xl items-center gap-3 overflow-hidden px-5 sm:px-8"
+    >
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-ink-0 to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-ink-0 to-transparent" />
+      <div className="ticker flex min-w-max gap-8 py-2 font-mono text-[11px] uppercase tracking-[0.22em] text-mute/70">
+        {row.map((t, i) => (
+          <span key={i} className="inline-flex items-center gap-2">
+            <span className="h-1 w-1 rounded-full bg-accent/70" />
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
