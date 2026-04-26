@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { PageHeader } from "./Blog.jsx";
 import { ArrowIcon, SparkleIcon, BoltIcon, InfinityIcon, GlobeIcon } from "../components/Icons.jsx";
+import PageHeader from "../components/PageHeader.jsx";
+import { submitLead } from "../lib/api.js";
+import { SITE } from "../lib/site.js";
 
 const formats = [
   {
@@ -72,7 +74,7 @@ export default function Advertise() {
               Advertise <em className="not-italic text-mute-soft">inside</em> the broadcast.
             </>
           }
-          body="Newsroll runs a single, premium ad format: native vertical scenes, editorially reviewed, labeled, and never programmatic. If you want attention without the trust tax, read on."
+          body="HackerRoll runs a single, premium ad format: native vertical placements for a technical audience, editorially reviewed, labeled, and never programmatic. If you want attention without the trust tax, read on."
         />
 
         {/* Metrics row */}
@@ -100,8 +102,8 @@ export default function Advertise() {
           </div>
 
           <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-line-strong bg-line-strong md:grid-cols-3">
-            {formats.map((f, i) => (
-              <FormatCard key={f.idx} {...f} position={i} />
+            {formats.map((f) => (
+              <FormatCard key={f.idx} {...f} />
             ))}
           </div>
         </div>
@@ -150,7 +152,7 @@ export default function Advertise() {
   );
 }
 
-function FormatCard({ idx, name, price, blurb, points, Icon, accent, position }) {
+function FormatCard({ idx, name, price, blurb, points, Icon, accent }) {
   const accentClass = accent === "accent" ? "text-accent" : accent === "violet" ? "text-violet" : "text-hot";
   return (
     <div
@@ -277,11 +279,26 @@ function Faq({ q, a }) {
 }
 
 function ContactForm() {
-  const [state, setState] = useState({ company: "", email: "", budget: "from-5k", message: "", ok: false });
+  const [state, setState] = useState({ company: "", email: "", budget: "from-5k", message: "", status: "idle" });
 
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault();
-    setState((s) => ({ ...s, ok: true }));
+    setState((s) => ({ ...s, status: "sending" }));
+
+    try {
+      await submitLead({
+        type: "advertise",
+        email: state.email,
+        metadata: {
+          company: state.company,
+          budget: state.budget,
+          message: state.message,
+        },
+      });
+      setState({ company: "", email: "", budget: "from-5k", message: "", status: "ok" });
+    } catch (error) {
+      setState((s) => ({ ...s, status: error.message }));
+    }
   }
 
   return (
@@ -300,10 +317,10 @@ function ContactForm() {
             <a
               id="link-email-ads"
               data-event="ads_mailto_click"
-              href="mailto:ads@newsroll.app"
+              href={`mailto:${SITE.adsEmail}`}
               className="hover:text-text"
             >
-              ads@newsroll.app
+              {SITE.adsEmail}
             </a>
           </div>
         </div>
@@ -368,16 +385,23 @@ function ContactForm() {
 
           <div className="mt-2 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
             <p className="text-[11px] text-mute">
-              Protected by an editorial veto. No brief, no pressure.
+              <span role="status" aria-live="polite">
+                {state.status === "ok"
+                  ? "Sent. We'll reply in two business days."
+                  : state.status !== "idle" && state.status !== "sending"
+                    ? state.status
+                    : "Protected by an editorial veto. No brief, no pressure."}
+              </span>
             </p>
             <button
               id="cta-advertise-submit"
               data-event="ad_inquiry_submit_click"
               type="submit"
-              className="btn-halo inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-[13px] font-semibold text-ink-0 transition-transform hover:-translate-y-0.5"
+              disabled={state.status === "sending"}
+              className="btn-halo inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-[13px] font-semibold text-ink-0 transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {state.ok ? "Sent ✦ We'll reply in 2 days" : "Send inquiry"}
-              {!state.ok && <ArrowIcon className="h-3.5 w-3.5" />}
+              {state.status === "ok" ? "Sent" : state.status === "sending" ? "Sending" : "Send inquiry"}
+              {state.status !== "ok" && <ArrowIcon className="h-3.5 w-3.5" />}
             </button>
           </div>
         </form>

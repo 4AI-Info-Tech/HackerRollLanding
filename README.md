@@ -1,4 +1,4 @@
-# Newsroll — Landing
+# HackerRoll — Landing
 
 Dark, editorial-futurist landing + blog + advertise site for an AI news-to-video mobile app. React 19 + Vite 7 + Tailwind v4 + react-router, pure-CSS animations, zero external asset dependencies beyond Google Fonts.
 
@@ -10,6 +10,9 @@ Dark, editorial-futurist landing + blog + advertise site for an AI news-to-video
 | `/blog`           | Blog          | Field notes index                             |
 | `/blog/:slug`     | Blog post     | Long-form post reader                         |
 | `/advertise`      | Advertise     | Formats, rate card, inquiry form for brands   |
+| `/support`        | Support       | App support, billing help, contact form       |
+| `/privacy`        | Privacy       | Privacy policy and data practices             |
+| `/terms`          | Terms         | Product terms and acceptable use              |
 | `*`               | NotFound      | 404 with recovery links                       |
 
 SPA fallback is handled by `public/_redirects` (`/* → /index.html 200`) on Cloudflare Pages.
@@ -19,6 +22,7 @@ SPA fallback is handled by `public/_redirects` (`/* → /index.html 200`) on Clo
 ```bash
 npm install
 npm run dev        # http://localhost:5173
+npm run lint       # eslint flat config
 npm run build      # → dist/
 npm run preview    # serve dist/ locally
 ```
@@ -42,6 +46,7 @@ Every CTA and form carries stable `id` + `data-event` attributes so a dashboard 
 | Footer           | Terms link                      | `link-terms`                | `footer_terms_click`        |
 | Footer           | Blog link                       | `link-blog`                 | `footer_blog_click`         |
 | Footer           | Advertise link                  | `link-advertise`            | `footer_advertise_click`    |
+| Footer           | Support link                    | `link-support`              | `footer_support_click`      |
 | Footer           | Press link                      | `link-press`                | `footer_press_click`        |
 | Blog             | Post list item (per post)       | `blog-post-<slug>`          | `blog_post_open`            |
 | Blog             | Subscribe form                  | `form-blog-subscribe`       | `blog_subscribe_submit`     |
@@ -50,6 +55,8 @@ Every CTA and form carries stable `id` + `data-event` attributes so a dashboard 
 | Advertise        | Inquiry form                    | `form-advertise-inquiry`    | `ad_inquiry_submit`         |
 | Advertise        | Inquiry submit                  | `cta-advertise-submit`      | `ad_inquiry_submit_click`   |
 | Advertise        | Contact mailto                  | `link-email-ads`            | `ads_mailto_click`          |
+| Support          | Support form                    | `form-support`              | `support_form_submit`       |
+| Support          | Support submit                  | `cta-support-submit`        | `support_submit_click`      |
 
 Each interactive element also carries `data-surface` where useful (`header`, `hero`, `feature_band`) for funnel segmentation.
 
@@ -67,7 +74,7 @@ This project is structured to ship directly on Cloudflare Pages. No external hos
 **Or via Wrangler CLI:**
 ```bash
 npm run build
-npx wrangler pages deploy dist --project-name=newsroll-landing
+npx wrangler pages deploy dist --project-name=hackerroll-landing
 ```
 
 `public/_headers` and `public/_redirects` are copied into `dist/` by Vite and are read natively by Cloudflare Pages:

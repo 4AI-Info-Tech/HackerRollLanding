@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { SITE } from "../lib/site.js";
+
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
@@ -8,55 +11,64 @@ export default function Footer() {
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-accent shadow-[0_0_8px_var(--color-accent)]" />
               <span className="font-display text-[15px] font-semibold tracking-tight text-text">
-                newsroll<span className="text-accent">.</span>app
+                hackerroll<span className="text-accent">.</span>com
               </span>
             </div>
             <p className="mt-3 max-w-sm text-[12px] leading-relaxed text-mute">
-              The news, broadcast. Built in the open. No autoplay ads, no doomposting, no infinite newsletters.
+              Hacker News, visualized. Read the front page, browse threads, and use AI tools without losing the original source.
             </p>
           </div>
 
           <nav className="flex flex-wrap items-center gap-5 text-[12px] text-mute">
-            <a
+            <Link
               id="link-blog"
               data-event="footer_blog_click"
-              href="/blog"
+              to="/blog"
               className="transition-colors hover:text-text"
             >
               Blog
-            </a>
+            </Link>
             <span className="h-3 w-px bg-line-strong" />
-            <a
+            <Link
               id="link-advertise"
               data-event="footer_advertise_click"
-              href="/advertise"
+              to="/advertise"
               className="transition-colors hover:text-text"
             >
               Advertise
-            </a>
+            </Link>
             <span className="h-3 w-px bg-line-strong" />
-            <a
+            <Link
+              id="link-support"
+              data-event="footer_support_click"
+              to="/support"
+              className="transition-colors hover:text-text"
+            >
+              Support
+            </Link>
+            <span className="h-3 w-px bg-line-strong" />
+            <Link
               id="link-privacy"
               data-event="footer_privacy_click"
-              href="/privacy"
+              to="/privacy"
               className="transition-colors hover:text-text"
             >
               Privacy
-            </a>
+            </Link>
             <span className="h-3 w-px bg-line-strong" />
-            <a
+            <Link
               id="link-terms"
               data-event="footer_terms_click"
-              href="/terms"
+              to="/terms"
               className="transition-colors hover:text-text"
             >
               Terms
-            </a>
+            </Link>
             <span className="h-3 w-px bg-line-strong" />
             <a
               id="link-press"
               data-event="footer_press_click"
-              href="mailto:press@newsroll.app"
+              href={`mailto:${SITE.pressEmail}`}
               className="transition-colors hover:text-text"
             >
               Press
@@ -65,7 +77,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t border-line pt-6 font-mono text-[10px] uppercase tracking-[0.22em] text-mute/80 md:flex-row md:items-center">
-          <span>© {year} Newsroll Labs · All rights reserved</span>
+          <span>© {year} HackerRoll · All rights reserved</span>
           <span className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             Operational · v0.1.0

@@ -1,48 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowIcon } from "../components/Icons.jsx";
-
-export const POSTS = [
-  {
-    slug: "rendering-the-wire",
-    title: "Rendering the wire: how Newsroll turns a press release into a scene in twelve seconds.",
-    kicker: "Engineering",
-    date: "2026-04-10",
-    readTime: "6 min read",
-    excerpt:
-      "A walkthrough of the render pipeline — from dedup hashing the AP wire to stitching voice, motion, and b-roll into a vertical short.",
-    accent: "accent",
-  },
-  {
-    slug: "news-that-moves",
-    title: "News that moves: the case against the infinite newsletter.",
-    kicker: "Editorial",
-    date: "2026-03-28",
-    readTime: "4 min read",
-    excerpt:
-      "We read 612 newsletters last month so you don't have to. A short argument for reclaiming nine minutes a day.",
-    accent: "violet",
-  },
-  {
-    slug: "sources-we-trust",
-    title: "Sources we trust, and why it matters more than ever.",
-    kicker: "Trust & safety",
-    date: "2026-03-14",
-    readTime: "5 min read",
-    excerpt:
-      "Reuters, AP, and Bloomberg form the spine of our pipeline. Here is our policy on provenance, labels, and retractions.",
-    accent: "hot",
-  },
-  {
-    slug: "beta-0-1-patch-notes",
-    title: "Beta 0.1 patch notes: captions, caption timing, and a faster scrubber.",
-    kicker: "Changelog",
-    date: "2026-02-22",
-    readTime: "2 min read",
-    excerpt:
-      "Smaller captions, proper word-level timing, and a scrubber that finally feels right under your thumb.",
-    accent: "accent",
-  },
-];
+import PageHeader from "../components/PageHeader.jsx";
+import { submitLead } from "../lib/api.js";
+import { POSTS, formatDate } from "./blogData.js";
 
 export default function Blog() {
   return (
@@ -100,28 +61,7 @@ export default function Blog() {
                 One post a fortnight. Never more.
               </h4>
             </div>
-            <form
-              id="form-blog-subscribe"
-              data-event="blog_subscribe_submit"
-              onSubmit={(e) => e.preventDefault()}
-              className="flex w-full max-w-md items-center gap-2 rounded-full border border-line-strong bg-ink-0/60 p-1.5 pl-4"
-            >
-              <input
-                id="email-blog"
-                type="email"
-                placeholder="you@inbox.com"
-                data-event="blog_email_focus"
-                className="flex-1 bg-transparent text-[13px] text-text placeholder:text-mute focus:outline-none"
-              />
-              <button
-                id="cta-blog-subscribe"
-                data-event="blog_subscribe_click"
-                type="submit"
-                className="rounded-full bg-accent px-4 py-2 text-[12px] font-semibold text-ink-0"
-              >
-                Subscribe
-              </button>
-            </form>
+            <BlogSubscribeForm />
           </div>
         </div>
       </div>
@@ -129,22 +69,59 @@ export default function Blog() {
   );
 }
 
-export function PageHeader({ eyebrow, title, body }) {
+function BlogSubscribeForm() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("idle");
+
+  async function onSubmit(event) {
+    event.preventDefault();
+    setStatus("sending");
+
+    try {
+      await submitLead({
+        type: "blog-subscribe",
+        email,
+        metadata: { surface: "blog" },
+      });
+      setStatus("ok");
+      setEmail("");
+    } catch (error) {
+      setStatus(error.message);
+    }
+  }
+
   return (
-    <div className="pt-10 sm:pt-16">
-      <div className="inline-flex w-fit items-center gap-2 font-mono text-[11px] uppercase tracking-[0.24em] text-mute">
-        <span className="h-px w-6 bg-line-strong" />
-        {eyebrow}
-      </div>
-      <h1 className="mt-5 max-w-3xl font-display text-[40px] font-semibold leading-[0.98] tracking-[-0.025em] text-text sm:text-[56px]">
-        {title}
-      </h1>
-      {body && (
-        <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-mute sm:text-[16px]">
-          {body}
-        </p>
+    <form
+      id="form-blog-subscribe"
+      data-event="blog_subscribe_submit"
+      onSubmit={onSubmit}
+      className="flex w-full max-w-md items-center gap-2 rounded-full border border-line-strong bg-ink-0/60 p-1.5 pl-4"
+    >
+      <label htmlFor="email-blog" className="sr-only">Email</label>
+      <input
+        id="email-blog"
+        type="email"
+        required
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        placeholder="you@inbox.com"
+        autoComplete="email"
+        data-event="blog_email_focus"
+        className="min-w-0 flex-1 bg-transparent text-[13px] text-text placeholder:text-mute focus:outline-none"
+      />
+      <button
+        id="cta-blog-subscribe"
+        data-event="blog_subscribe_click"
+        type="submit"
+        disabled={status === "sending"}
+        className="shrink-0 rounded-full bg-accent px-4 py-2 text-[12px] font-semibold text-ink-0 disabled:cursor-not-allowed disabled:opacity-70"
+      >
+        {status === "ok" ? "Added" : status === "sending" ? "Sending" : "Subscribe"}
+      </button>
+      {status !== "idle" && status !== "sending" && status !== "ok" && (
+        <p className="sr-only" role="status" aria-live="polite">{status}</p>
       )}
-    </div>
+    </form>
   );
 }
 
@@ -157,9 +134,4 @@ function AccentDot({ accent }) {
       ? "shadow-[0_0_8px_rgba(178,140,255,0.7)]"
       : "shadow-[0_0_8px_rgba(255,107,61,0.7)]";
   return <span className={`inline-block h-1.5 w-1.5 rounded-full ${cls} ${glow}`} />;
-}
-
-export function formatDate(iso) {
-  const d = new Date(iso + "T00:00:00");
-  return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
 }

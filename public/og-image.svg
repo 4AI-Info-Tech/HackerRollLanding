@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">HackerRoll app preview</title>
+  <desc id="desc">Dark editorial HackerRoll app Open Graph image with Hacker News typography.</desc>
+  <defs>
+    <radialGradient id="cyan" cx="36%" cy="42%" r="55%">
+      <stop offset="0" stop-color="#6DE4FF" stop-opacity="0.45"/>
+      <stop offset="0.5" stop-color="#6DE4FF" stop-opacity="0.13"/>
+      <stop offset="1" stop-color="#6DE4FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="violet" cx="77%" cy="35%" r="44%">
+      <stop offset="0" stop-color="#B28CFF" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#B28CFF" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M56 0H0V56" fill="none" stroke="#FFFFFF" stroke-opacity="0.055"/>
+    </pattern>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="#05060A"/>
+  <rect width="1200" height="630" fill="url(#cyan)"/>
+  <rect width="1200" height="630" fill="url(#violet)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <g opacity="0.55">
+    <path d="M0 520C162 475 251 518 407 474C553 433 633 349 783 335C933 321 1012 381 1200 323V630H0Z" fill="#0A0C13"/>
+  </g>
+  <g transform="translate(760 92)">
+    <rect x="0" y="0" width="260" height="446" rx="42" fill="#05060A" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="8"/>
+    <rect x="22" y="24" width="216" height="398" rx="28" fill="#12141C"/>
+    <rect x="42" y="54" width="176" height="222" rx="20" fill="#0A0C13"/>
+    <circle cx="156" cy="124" r="66" fill="#6DE4FF" fill-opacity="0.2"/>
+    <circle cx="98" cy="184" r="48" fill="#FF6B3D" fill-opacity="0.18"/>
+    <path d="M54 308H206" stroke="#F2F4F8" stroke-opacity="0.82" stroke-width="14" stroke-linecap="round"/>
+    <path d="M54 340H184" stroke="#9AA2B6" stroke-opacity="0.68" stroke-width="10" stroke-linecap="round"/>
+    <path d="M54 368H142" stroke="#7A8298" stroke-opacity="0.6" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="130" cy="404" r="5" fill="#6DE4FF"/>
+  </g>
+  <g transform="translate(110 118)">
+    <g filter="url(#glow)">
+      <circle cx="9" cy="9" r="9" fill="#FF6B3D"/>
+    </g>
+    <text x="30" y="15" fill="#9AA2B6" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="18" font-weight="600" letter-spacing="5">ON AIR DAILY</text>
+    <text x="0" y="140" fill="#F2F4F8" font-family="'Instrument Sans', system-ui, sans-serif" font-size="92" font-weight="700">See the news.</text>
+    <text x="0" y="232" fill="#9AA2B6" font-family="'Instrument Sans', system-ui, sans-serif" font-size="92" font-weight="700">Don't just read it.</text>
+    <text x="0" y="306" fill="#7A8298" font-family="'Inter Tight', system-ui, sans-serif" font-size="30">Daily headlines rendered into short vertical video and stills.</text>
+    <g transform="translate(0 368)">
+      <rect width="268" height="58" rx="29" fill="#6DE4FF"/>
+      <text x="34" y="38" fill="#05060A" font-family="'Inter Tight', system-ui, sans-serif" font-size="22" font-weight="700">Download on iOS</text>
+    </g>
+    <text x="0" y="500" fill="#F2F4F8" font-family="'Instrument Sans', system-ui, sans-serif" font-size="28" font-weight="700">hackerroll<tspan fill="#6DE4FF">.</tspan>com</text>
+  </g>
+</svg>

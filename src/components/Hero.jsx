@@ -1,6 +1,8 @@
 import { useState } from "react";
 import PhoneMockup from "./PhoneMockup.jsx";
 import { AppleIcon, ArrowIcon, GlobeIcon } from "./Icons.jsx";
+import { submitLead } from "../lib/api.js";
+import { SITE } from "../lib/site.js";
 
 export default function Hero() {
   return (
@@ -22,7 +24,7 @@ export default function Hero() {
             className="rise mt-6 font-display text-[42px] font-semibold leading-[0.95] tracking-[-0.025em] text-text sm:text-[56px] md:text-[68px] lg:text-[74px]"
             style={{ animationDelay: "80ms" }}
           >
-            See the news.<br />
+            See Hacker News.<br />
             <span className="text-mute-soft">Don&rsquo;t just</span>{" "}
             <em className="not-italic relative whitespace-nowrap text-text">
               read
@@ -49,9 +51,8 @@ export default function Hero() {
             className="rise mt-7 max-w-[520px] text-[15px] leading-relaxed text-mute sm:text-[17px]"
             style={{ animationDelay: "160ms" }}
           >
-            Newsroll reads the wires for you, then renders every story into short,
-            vertical video and image — updated the minute news breaks. Swipe the
-            world in under nine minutes a day.
+            HackerRoll turns Hacker News into a visual, readable feed with source links,
+            comment threads, AI summaries, translations, and authenticated HN actions.
           </p>
 
           <div
@@ -62,13 +63,13 @@ export default function Hero() {
               id="cta-hero-download"
               data-event="download_click_hero"
               data-surface="hero"
-              href="https://apps.apple.com/app/id6761051035"
+              href={SITE.appStoreUrl}
               target="_blank"
               rel="noopener"
               className="btn-halo group inline-flex items-center gap-3 rounded-full bg-accent px-5 py-3.5 text-[14px] font-semibold tracking-tight text-ink-0 transition-transform duration-200 hover:-translate-y-0.5"
             >
               <AppleIcon className="h-[18px] w-[18px]" />
-              <span>Download on iOS</span>
+              <span>Get iOS access</span>
               <span className="ml-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-ink-0/10">
                 <ArrowIcon className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
               </span>
@@ -116,12 +117,22 @@ export default function Hero() {
 
 function EmailCapture() {
   const [email, setEmail] = useState("");
-  const [state, setState] = useState("idle"); // idle | ok | err
+  const [state, setState] = useState("idle");
 
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault();
-    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    setState(valid ? "ok" : "err");
+    setState("sending");
+
+    try {
+      await submitLead({
+        type: "early-access",
+        email,
+        metadata: { surface: "hero" },
+      });
+      setState("ok");
+    } catch (error) {
+      setState(error.message);
+    }
   }
 
   return (
@@ -142,17 +153,22 @@ function EmailCapture() {
         placeholder="you@inbox.com · get launch invite"
         autoComplete="email"
         data-event="early_access_email_focus"
-        className="flex-1 bg-transparent text-[13px] text-text placeholder:text-mute focus:outline-none"
+        required
+        className="min-w-0 flex-1 bg-transparent text-[13px] text-text placeholder:text-mute focus:outline-none"
       />
       <button
         id="cta-early-access-submit"
         data-event="early_access_submit_click"
         data-surface="hero"
         type="submit"
-        className="inline-flex items-center gap-1.5 rounded-full bg-ink-3 px-4 py-2 text-[12px] font-medium text-text transition-colors hover:bg-ink-2"
+        disabled={state === "sending"}
+        className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-ink-3 px-4 py-2 text-[12px] font-medium text-text transition-colors hover:bg-ink-2 disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {state === "ok" ? "On the list ✦" : "Notify me"}
+        {state === "ok" ? "On the list" : state === "sending" ? "Sending" : "Notify me"}
       </button>
+      {state !== "idle" && state !== "sending" && state !== "ok" && (
+        <p className="sr-only" role="status" aria-live="polite">{state}</p>
+      )}
     </form>
   );
 }

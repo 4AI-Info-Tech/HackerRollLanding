@@ -1,27 +1,28 @@
 import { BrushIcon, InfinityIcon, BoltIcon, AppleIcon, ArrowIcon } from "./Icons.jsx";
+import { SITE } from "../lib/site.js";
 
 const features = [
   {
     idx: "01",
     label: "Visuals",
-    title: "AI-Generated Visuals",
-    body: "Every story is rendered into a short vertical film or cover still — scene, motion, voice. News that moves.",
+    title: "Visual HN Feed",
+    body: "Top Hacker News stories become swipeable visual cards with source links, readable text, and thread context close at hand.",
     Icon: BrushIcon,
     accent: "accent",
   },
   {
     idx: "02",
     label: "Feed",
-    title: "Infinite Scroll",
-    body: "A TikTok-style feed you already know how to use. One thumb, every headline. No tabs. No tabs of tabs.",
+    title: "Classic Plus Swipe",
+    body: "Move between the familiar HN-style list, visual feed, saved stories, inbox, and topic browsing without losing your place.",
     Icon: InfinityIcon,
     accent: "violet",
   },
   {
     idx: "03",
     label: "Wire",
-    title: "Real-Time Updates",
-    body: "Wires hit, we render, you swipe. Median latency from breaking source to your feed is twelve seconds.",
+    title: "Pro AI Tools",
+    body: "Summaries, explainers, thread intelligence, and structured translation run on demand against the current story and comments.",
     Icon: BoltIcon,
     accent: "hot",
   },
@@ -57,13 +58,13 @@ export default function Features() {
 
             <div className="relative">
               <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-mute">
-                /app-store · coming soon
+                /ios · beta
               </div>
               <h3 className="mt-3 font-display text-[30px] font-semibold leading-[1.05] tracking-[-0.02em] text-text sm:text-[38px]">
-                Swipe the world in <span className="text-accent">nine minutes</span> a day.
+                Swipe Hacker News in <span className="text-accent">nine minutes</span> a day.
               </h3>
               <p className="mt-3 max-w-md text-[14px] leading-relaxed text-mute sm:text-[15px]">
-                Free to download. No newsletter guilt. No autoplay ads. Just the day, rendered.
+                Free to start. Pro unlocks deeper AI tools, credits, and fewer ads.
               </p>
             </div>
 
@@ -72,20 +73,20 @@ export default function Features() {
                 id="cta-band-download"
                 data-event="download_click_band"
                 data-surface="feature_band"
-                href="https://apps.apple.com/app/id6761051035"
+                href={SITE.appStoreUrl}
                 target="_blank"
                 rel="noopener"
                 className="btn-halo group inline-flex items-center gap-3 rounded-full bg-accent px-5 py-3.5 text-[14px] font-semibold tracking-tight text-ink-0 transition-transform hover:-translate-y-0.5"
               >
                 <AppleIcon className="h-[18px] w-[18px]" />
-                <span>Download on iOS</span>
+                <span>Get iOS access</span>
                 <ArrowIcon className="h-4 w-4" />
               </a>
               <a
                 id="cta-band-android"
                 data-event="android_waitlist_click"
                 data-surface="feature_band"
-                href="#"
+                href="/support#android-waitlist"
                 className="text-[12px] text-mute underline-offset-4 hover:text-text hover:underline"
               >
                 Android? Join the waitlist →

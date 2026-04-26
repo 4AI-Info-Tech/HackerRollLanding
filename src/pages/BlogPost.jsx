@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
-import { POSTS, formatDate } from "./Blog.jsx";
 import { ArrowIcon } from "../components/Icons.jsx";
+import { POSTS, formatDate } from "./blogData.js";
 
 export default function BlogPost() {
   const { slug } = useParams();

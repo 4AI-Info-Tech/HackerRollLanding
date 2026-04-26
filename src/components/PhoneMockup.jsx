@@ -34,7 +34,7 @@ const stories = [
   {
     tag: "TECH / AI",
     headline: "A lab-grown model writes code that writes itself.",
-    source: "@newsroll.app",
+    source: "@hackerroll.com",
     likes: "512.9K",
     comments: "22.0K",
     shares: "88.4K",
@@ -336,4 +336,3 @@ function BatteryGlyph() {
     </svg>
   );
 }
-
